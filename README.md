@@ -8,3 +8,15 @@ This respository contains the code for an Alexa skill that allows users to hear 
 * An Amazon Developer account (<a href="https://developer.amazon.com/en-US/docs/alexa/ask-overviews/create-developer-account.html">sign up here</a> *FREE)
 * An Alexa-enabled device (useful for additional testing)
 * Amazon Alexa app on mobile device
+
+<h2>Setup</h2>
+
+1. Create a new skill in the Alexa Developer Console
+    - Name your skill
+    - Choose 'Custom' for model
+    - Choose 'Alexa-hosted (Python) for Hosting services
+    - Choose 'Start from Scratch' for Templates
+    - Click 'Create' and wait for 'Build Completed' message
+2. Navigate to 'Skill Invocation Name' and change the skill invocation name relevant to your school. For example, this school uses 'willow dale menu'.
+3. Navigate to 'Interaction Model' > 'Intents' and add and intent for each request you wish to add to the skill. For example this skill currently uses, 'BreakfastIntent', 'LunchIntent', 'LunchandBreakfastIntent', 'BreakfastTomorrowIntent', 'LunchTomorrowIntent', 'LunchandBreakfastTomorrowIntent'. These will be defined in the lambda function. Save and Build Model when adding intents.
+4.
