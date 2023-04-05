@@ -19,4 +19,4 @@ This respository contains the code for an Alexa skill that allows users to hear 
     - Click 'Create' and wait for 'Build Completed' message
 2. Navigate to 'Skill Invocation Name' and change the skill invocation name relevant to your school. For example, this school uses 'willow dale menu'.
 3. Navigate to 'Interaction Model' > 'Intents' and add and intent for each request you wish to add to the skill. For example this skill currently uses, 'BreakfastIntent', 'LunchIntent', 'LunchandBreakfastIntent', 'BreakfastTomorrowIntent', 'LunchTomorrowIntent', 'LunchandBreakfastTomorrowIntent'. These will be defined in the lambda function. Save and Build Model when adding intents.
-4.
+4. Navigate to 'Code' section within console. Copy and paste code into appropriate section. Be sure to adjust paths to accomodate your specific school menu and where you are storing it. Menus shoud be in JSON format.

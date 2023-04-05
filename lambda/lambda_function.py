@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# This code includes handling intents samples from an Alexa skill using the Alexa Skills Kit SDK for Python.
+# This sample demonstrates handling intents from an Alexa skill using the Alexa Skills Kit SDK for Python.
 # Please visit https://alexa.design/cookbook for additional examples on implementing slots, dialog management,
 # session persistence, api calls, and more.
 # This sample is built using the handler classes approach in skill builder.
 import logging
 import json
+import boto3
 from datetime import date, datetime, timedelta
 import ask_sdk_core.utils as ask_utils
 
@@ -19,16 +20,25 @@ from ask_sdk_model import Response
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-with open('menus/breakfast/january_breakfast_2023.json', 'r') as f:
-    breakfast_food_list = json.load(f)
+# Initialize S3 client
+s3 = boto3.client('s3')
 
-with open('menus/lunch/january_lunch_2023.json', 'r') as l:
-    lunch_food_list = json.load(l)
+# Specify the S3 bucket name and file paths
+bucket_name = 'your-bucket-name'
+breakfast_file_key = 'breakfast_menu_file_path'
+lunch_file_key = 'lunch_menu_file_path'
+
+# Retrieve the objects from the S3 bucket
+breakfast_object = s3.get_object(Bucket=bucket_name, Key=breakfast_file_key)
+lunch_object = s3.get_object(Bucket=bucket_name, Key=lunch_file_key)
+
+# Load the JSON data from the objects
+breakfast_food_list = json.load(breakfast_object['Body'])
+lunch_food_list = json.load(lunch_object['Body'])
 
 # Get the current date
 today = date.today()
 
-# Get tomorrow's date
 tomorrow = tomorrow = today + timedelta(days=1)
 
 # Get the dictionary with the matching date for breakfast today
@@ -36,14 +46,14 @@ matching_item = next((item for item in breakfast_food_list if datetime.strptime(
 
 # Check if a matching dictionary was found
 if matching_item:
-  # Assign the corresponding food for breakfast
+  # Print the corresponding food
     breakfast_food = matching_item['Food']
 
 # Get the dictionary with the matching date for lunch today
 matching_item = next((item for item in lunch_food_list if datetime.strptime(item['Date'], "%Y-%m-%d").date() == today), None)
 
 if matching_item:
-  # Assign the corresponding food for lunch
+  # Print the corresponding food
     lunch_food = matching_item['Food']
 
 # Get the dictionary with the matching date for breakfast tomorrow
@@ -51,19 +61,17 @@ matching_item = next((item for item in breakfast_food_list if datetime.strptime(
 
 # Check if a matching dictionary was found
 if matching_item:
-  # Assign the corresponding food or breakfast tomorrow
+  # Print the corresponding food
     breakfast_food_tomorrow = matching_item['Food']
 
 # Get the dictionary with the matching date for lunch tomorrow
     matching_item = next((item for item in lunch_food_list if datetime.strptime(item['Date'], "%Y-%m-%d").date() == tomorrow), None)
 
 if matching_item:
-  # Assign the corresponding food for lunch for tomorrow
+  # Print the corresponding food
     lunch_food_tomorrow = matching_item['Food']
 
-
 class LunchandBreakfastIntentHandler (AbstractRequestHandler):
-    """ Handler for today's lunch and breakfast."""
     def can_handle(self, handler_input):
         return ask_utils.is_intent_name("LunchandBreakfastIntent")(handler_input)
 
@@ -78,7 +86,6 @@ class LunchandBreakfastIntentHandler (AbstractRequestHandler):
         )
 
 class LunchandBreakfastTomorrowIntentHandler (AbstractRequestHandler):
-    """ Handler for tomorrow's lunch and breakfast."""
     def can_handle(self, handler_input):
         return ask_utils.is_intent_name("LunchandBreakfastTomorrowIntent")(handler_input)
 
@@ -93,7 +100,6 @@ class LunchandBreakfastTomorrowIntentHandler (AbstractRequestHandler):
         )
 
 class BreakfastTomorrowIntentHandler (AbstractRequestHandler):
-    """ Handler for tomorrow's breakfast."""
     def can_handle(self, handler_input):
         return ask_utils.is_intent_name("BreakfastTomorrowIntent")(handler_input)
 
@@ -108,7 +114,6 @@ class BreakfastTomorrowIntentHandler (AbstractRequestHandler):
         )
 
 class LunchTomorrowIntentHandler (AbstractRequestHandler):
-    """ Handler for tomorrow's lunch."""
     def can_handle(self, handler_input):
         return ask_utils.is_intent_name("LunchTomorrowIntent")(handler_input)
 
@@ -123,7 +128,6 @@ class LunchTomorrowIntentHandler (AbstractRequestHandler):
         )
 
 class LunchIntentHandler (AbstractRequestHandler):
-    """ Handler for today's lunch."""
     def can_handle(self, handler_input):
         return ask_utils.is_intent_name("LunchIntent")(handler_input)
 
@@ -137,9 +141,7 @@ class LunchIntentHandler (AbstractRequestHandler):
                 .response
         )
 
-
 class BreakfastIntentHandler (AbstractRequestHandler):
-    """ Handler for today's breakfast."""
     def can_handle(self, handler_input):
         return ask_utils.is_intent_name("BreakfastIntent")(handler_input)
 
