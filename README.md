@@ -26,4 +26,4 @@ This respository contains the code for an Alexa skill that allows users to hear 
 <h2>Resources :bulb:</h2>
 See this guide from the Alexa Workshop that details building an Alexa Skill: <a href="https://developer.amazon.com/en-US/docs/alexa/workshops/build-an-engaging-skill/get-started/index.html?sc_category=Paid&sc_channel=SEM&sc_campaign=ASK-cta-q2-23&sc_publisher=GO&sc_content=Banner&sc_detail=GetStarted&sc_funnel=Awareness&sc_country=WW&sc_medium=Paid_SEM_ASK-cta-q2-23_GO_Banner_GetStarted_Awareness_WW_Skill_Builders&sc_segment=Skill_Builders&sc_keyword=how%20to%20create%20alexa%20skill&gclid=Cj0KCQjwuLShBhC_ARIsAFod4fJMfzQiVFRE34seCYRCDpbo9RxNJzfkMDDzdMcFCnRoQUFd9VTGDj4aAomqEALw_wcB">Build an Engaging Alexa Skill</a>
 
-Having trouble getting your skill published. See this guide from Amazon: <a href="https://blueprints.amazon.com/help/publish-your-skill">Publish your skill to the Alexa Skills store</a>
+Having trouble getting your skill published? See this guide from Amazon: <a href="https://blueprints.amazon.com/help/publish-your-skill">Publish your skill to the Alexa Skills store</a>
