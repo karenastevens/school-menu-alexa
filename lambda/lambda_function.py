@@ -1,4 +1,5 @@
 import logging
+import requests
 import json
 import boto3
 from datetime import date, datetime, timedelta
@@ -46,6 +47,43 @@ def clean_text(text):
     text = text.replace('#', '')
     text = text.replace('Main', '')
     return text.strip()  # Remove any leading/trailing whitespace
+
+def get_menu_data(school_id, date, meal_type, grade, person_id):
+    # Construct the API URL for Schoolcafe
+    base_url = "https://webapis.schoolcafe.com/api/CalendarView/GetDailyMenuitemsByGrade"
+    params = {
+        "SchoolId": school_id,
+        "ServingDate": date,
+        "ServingLine": "Regular",
+        "MealType": meal_type,
+        "Grade": grade,
+        "PersonId": person_id
+    }
+    headers = {
+        "accept": "application/json"
+    }
+
+    # Make the request
+    response = requests.get(base_url, params=params, headers=headers)
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        return response.json()
+    else:
+        logger.error(f"Error fetching data: {response.status_code}")
+        logger.error("Response content: " + response.text)
+        return None
+
+def get_cleaned_menu_items(menu_data):
+    if menu_data and "ENTREES" in menu_data:
+        entrees = menu_data["ENTREES"]
+        if entrees:  # Check if there are any items in ENTREES
+            cleaned_items = [clean_text(item.get("MenuItemDescription", "")) for item in entrees]
+            return ', '.join(cleaned_items)
+        else:
+            return "No entrees found for the selected date."
+    else:
+        return "No data received."
 
 
 class LunchandBreakfastIntentHandler (AbstractRequestHandler):
