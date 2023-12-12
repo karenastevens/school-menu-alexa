@@ -1,13 +1,8 @@
-# -*- coding: utf-8 -*-
-
-# This sample demonstrates handling intents from an Alexa skill using the Alexa Skills Kit SDK for Python.
-# Please visit https://alexa.design/cookbook for additional examples on implementing slots, dialog management,
-# session persistence, api calls, and more.
-# This sample is built using the handler classes approach in skill builder.
 import logging
 import json
 import boto3
 from datetime import date, datetime, timedelta
+import re
 import ask_sdk_core.utils as ask_utils
 
 from ask_sdk_core.skill_builder import SkillBuilder
@@ -19,57 +14,6 @@ from ask_sdk_model import Response
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-
-# Initialize S3 client
-s3 = boto3.client('s3')
-
-# Specify the S3 bucket name and file paths
-bucket_name = 'your-bucket-name'
-breakfast_file_key = 'breakfast_menu_file_path'
-lunch_file_key = 'lunch_menu_file_path'
-
-# Retrieve the objects from the S3 bucket
-breakfast_object = s3.get_object(Bucket=bucket_name, Key=breakfast_file_key)
-lunch_object = s3.get_object(Bucket=bucket_name, Key=lunch_file_key)
-
-# Load the JSON data from the objects
-breakfast_food_list = json.load(breakfast_object['Body'])
-lunch_food_list = json.load(lunch_object['Body'])
-
-# Get the current date
-today = date.today()
-
-tomorrow = tomorrow = today + timedelta(days=1)
-
-# Get the dictionary with the matching date for breakfast today
-matching_item = next((item for item in breakfast_food_list if datetime.strptime(item['Date'], "%Y-%m-%d").date() == today), None)
-
-# Check if a matching dictionary was found
-if matching_item:
-  # Print the corresponding food
-    breakfast_food = matching_item['Food']
-
-# Get the dictionary with the matching date for lunch today
-matching_item = next((item for item in lunch_food_list if datetime.strptime(item['Date'], "%Y-%m-%d").date() == today), None)
-
-if matching_item:
-  # Print the corresponding food
-    lunch_food = matching_item['Food']
-
-# Get the dictionary with the matching date for breakfast tomorrow
-matching_item = next((item for item in breakfast_food_list if datetime.strptime(item['Date'], "%Y-%m-%d").date() == tomorrow), None)
-
-# Check if a matching dictionary was found
-if matching_item:
-  # Print the corresponding food
-    breakfast_food_tomorrow = matching_item['Food']
-
-# Get the dictionary with the matching date for lunch tomorrow
-    matching_item = next((item for item in lunch_food_list if datetime.strptime(item['Date'], "%Y-%m-%d").date() == tomorrow), None)
-
-if matching_item:
-  # Print the corresponding food
-    lunch_food_tomorrow = matching_item['Food']
 
 class LunchandBreakfastIntentHandler (AbstractRequestHandler):
     def can_handle(self, handler_input):
