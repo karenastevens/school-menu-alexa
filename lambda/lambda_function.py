@@ -15,6 +15,39 @@ from ask_sdk_model import Response
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+# Global constants - specific to each school
+SCHOOL_ID = "9fd858fc-357b-44be-8652-07f574f659d3" # Willow Dale Elementary
+GRADE = "04" # Student grade
+PERSON_ID = "4eb64127-3ea4-4c3d-91ac-b8035a3971f7" # Student Schoolcafe ID
+
+# Utility functions
+
+def get_todays_date():
+    today = datetime.now()
+    return today.strftime("%Y-%m-%d")
+
+def get_tomorrows_date():
+    today = datetime.now()
+    tomorrow = today + timedelta(days=1)
+    return tomorrow.strftime("%Y-%m-%d")
+
+def is_weekend(date):
+    return date.weekday() >= 5
+
+# Text cleaning function to make it easier for Alexa to read
+def clean_text(text):
+    # Replace or remove unwanted characters and words
+    text = text.replace('w/', ' with ')
+    text = text.replace('&', 'and')
+    text = text.replace('Combo', '')  # Remove the word 'combo'
+    text = text.replace('Meal', '')   # Remove the word 'meal'
+    text = text.replace('ES', '')     # Remove the word 'ES'
+    text = re.sub(r'\d+', '', text)   # Remove all numbers
+    text = text.replace('#', '')
+    text = text.replace('Main', '')
+    return text.strip()  # Remove any leading/trailing whitespace
+
+
 class LunchandBreakfastIntentHandler (AbstractRequestHandler):
     def can_handle(self, handler_input):
         return ask_utils.is_intent_name("LunchandBreakfastIntent")(handler_input)
