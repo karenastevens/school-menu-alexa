@@ -85,13 +85,38 @@ def get_cleaned_menu_items(menu_data):
     else:
         return "No data received."
 
+# Today's Lunch and Breakfast
 
 class LunchandBreakfastIntentHandler (AbstractRequestHandler):
     def can_handle(self, handler_input):
         return ask_utils.is_intent_name("LunchandBreakfastIntent")(handler_input)
 
     def handle(self, handler_input):
-        speak_output = f"Today's breakfast will be {breakfast_food} and for lunch you are having {lunch_food}"
+        # Get today's date as a string
+        date_str = get_todays_date_date()
+        # Convert the string to a datetime object
+        date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
+
+        if is_weekend(date_obj):
+            speak_output = "There is no school today. Have a fantastic weekend!"
+        else:
+            meal_type = "Breakfast"
+
+            # Fetch the menu data for today's breakfast
+            menu_data = get_menu_data(SCHOOL_ID, date_str, meal_type, GRADE, PERSON_ID)
+            # Clean and prepare the menu items for speaking
+            breakfast_food = get_cleaned_menu_items(menu_data)
+
+            meal_type = 'Lunch'
+
+            # Fetch the menu data for today's lunch
+            menu_data = get_menu_data(SCHOOL_ID, date_str, meal_type, GRADE, PERSON_ID)
+            # Clean and prepare the menu items for speaking
+            lunch_food = get_cleaned_menu_items(menu_data)
+
+            # Construct the speech output
+            speak_output = f"Today's breakfast is: {breakfast_food}. For lunch tomorrow, you'll be having {lunch_food}." if lunch_food else "I'm sorry, I couldn't find the breakfast and lunch menu for today."
+            remprompt_text = "Can I help you with any other menu related questions?"
 
         return (
             handler_input.response_builder
@@ -99,13 +124,40 @@ class LunchandBreakfastIntentHandler (AbstractRequestHandler):
                 .ask(speak_output)
                 .response
         )
+
+# Tomorrow's Lunch and Breakfast
 
 class LunchandBreakfastTomorrowIntentHandler (AbstractRequestHandler):
     def can_handle(self, handler_input):
         return ask_utils.is_intent_name("LunchandBreakfastTomorrowIntent")(handler_input)
 
     def handle(self, handler_input):
-        speak_output = f"Tomorrow's breakfast will be {breakfast_food_tomorrow}. And for lunch tomorrow you will be having {lunch_food_tomorrow}"
+        # Get tomorrow's date as a string
+        date_str = get_tomorrows_date()
+        # Convert the string to a datetime object
+        date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
+
+        if is_weekend(date_obj):
+            speak_output = "There is no school tomorrow. Have a fantastic weekend!"
+        else:
+            meal_type = "Breakfast"
+
+            # Fetch the menu data for tomorrow's breakfast
+            menu_data = get_menu_data(SCHOOL_ID, date_str, meal_type, GRADE, PERSON_ID)
+            # Clean and prepare the menu items for speaking
+            breakfast_food = get_cleaned_menu_items(menu_data)
+
+            meal_type = 'Lunch'
+
+            # Fetch the menu data for tomorrow's lunch
+            menu_data = get_menu_data(SCHOOL_ID, date_str, meal_type, GRADE, PERSON_ID)
+            # Clean and prepare the menu items for speaking
+            lunch_food = get_cleaned_menu_items(menu_data)
+
+            # Construct the speech output
+            speak_output = f"Tomorrow's breakfast is: {breakfast_food} for lunch tomorrow you'll be having {lunch_food}." if lunch_food else "I'm sorry, I couldn't find the breakfast menu for tomorrow."
+            remprompt_text = "Can I help you with any other menu related questions?"
+
 
         return (
             handler_input.response_builder
@@ -113,13 +165,32 @@ class LunchandBreakfastTomorrowIntentHandler (AbstractRequestHandler):
                 .ask(speak_output)
                 .response
         )
+
+# Tomorrow's Breakfast
 
 class BreakfastTomorrowIntentHandler (AbstractRequestHandler):
     def can_handle(self, handler_input):
         return ask_utils.is_intent_name("BreakfastTomorrowIntent")(handler_input)
 
     def handle(self, handler_input):
-        speak_output = f"Tomorrow's breakfast is {breakfast_food_tomorrow}"
+        # Get tomorrow's date as a string
+        date_str = get_tomorrows_date()
+        # Convert the string to a datetime object
+        date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
+
+        if is_weekend(date_obj):
+            speak_output = "There is no school tomorrow. Have a fantastic weekend!"
+        else:
+            meal_type = "Breakfast"
+
+            # Fetch the menu data for tomorrow's lunch
+            menu_data = get_menu_data(SCHOOL_ID, date_str, meal_type, GRADE, PERSON_ID)
+            # Clean and prepare the menu items for speaking
+            breakfast_food = get_cleaned_menu_items(menu_data)
+
+            # Construct the speech output
+            speak_output = f"Tomorrow's breakfast is: {breakfast_food}" if breakfast_food else "I'm sorry, I couldn't find the breakfast menu for tomorrow."
+            remprompt_text = "Do you have any other questions about the breakfast or lunch menu?"
 
         return (
             handler_input.response_builder
@@ -127,41 +198,98 @@ class BreakfastTomorrowIntentHandler (AbstractRequestHandler):
                 .ask(speak_output)
                 .response
         )
+
+# Tomorrow's Lunch
 
 class LunchTomorrowIntentHandler (AbstractRequestHandler):
     def can_handle(self, handler_input):
         return ask_utils.is_intent_name("LunchTomorrowIntent")(handler_input)
 
     def handle(self, handler_input):
-        speak_output = f"Tomorrow's lunch is {lunch_food_tomorrow}"
+        # Get tomorrow's date as a string
+        date_str = get_tomorrows_date()
+        # Convert the string to a datetime object
+        date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
+
+        if is_weekend(date_obj):
+            speak_output = "There is no school tomorrow. Have a fantastic weekend!"
+        else:
+            meal_type = "Lunch"
+
+            # Fetch the menu data for tomorrow's lunch
+            menu_data = get_menu_data(SCHOOL_ID, date_str, meal_type, GRADE, PERSON_ID)
+            # Clean and prepare the menu items for speaking
+            lunch_food = get_cleaned_menu_items(menu_data)
+
+            # Construct the speech output
+            speak_output = f"Tomorrow's lunch is: {lunch_food}" if lunch_food else "I'm sorry, I couldn't find the lunch menu for tomorrow."
+            remprompt_text = "Do you have any other questions about the breakfast or lunch menu?"
 
         return (
             handler_input.response_builder
                 .speak(speak_output)
-                .ask(speak_output)
+                .ask(remprompt_text)
                 .response
         )
+
+# Today's Lunch
 
 class LunchIntentHandler (AbstractRequestHandler):
     def can_handle(self, handler_input):
         return ask_utils.is_intent_name("LunchIntent")(handler_input)
 
     def handle(self, handler_input):
-        speak_output = f"Today's lunch is {lunch_food}"
+        # Get today's date as a string
+        date_str = get_todays_date()
+        # Convert the string to a datetime object
+        date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
+
+        if is_weekend(date_obj):
+            speak_output = "There is no school today. Have a fantastic weekend!"
+        else:
+            meal_type = "Lunch"
+
+            # Fetch the menu data for tomorrow's lunch
+            menu_data = get_menu_data(SCHOOL_ID, date_str, meal_type, GRADE, PERSON_ID)
+            # Clean and prepare the menu items for speaking
+            lunch_food = get_cleaned_menu_items(menu_data)
+
+            # Construct the speech output
+            speak_output = f"Today's lunch is: {lunch_food}" if lunch_food else "I'm sorry, I couldn't find the lunch menu for today."
+            remprompt_text = "Is there anything else I can help you with today?"
 
         return (
             handler_input.response_builder
                 .speak(speak_output)
-                .ask(speak_output)
+                .ask(remprompt_text)
                 .response
         )
+
+# Today's Breakfast
 
 class BreakfastIntentHandler (AbstractRequestHandler):
     def can_handle(self, handler_input):
         return ask_utils.is_intent_name("BreakfastIntent")(handler_input)
 
     def handle(self, handler_input):
-        speak_output = f"Today's breakfast is {breakfast_food}"
+        # Get today's date as a string
+        date_str = get_todays_date()
+        # Convert the string to a datetime object
+        date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
+
+        if is_weekend(date_obj):
+            speak_output = "There is no school today. Have a fantastic weekend!"
+        else:
+            meal_type = "Breakfast"
+
+            # Fetch the menu data for today's breakfast.
+            menu_data = get_menu_data(SCHOOL_ID, date_str, meal_type, GRADE, PERSON_ID)
+            # Clean and prepare the menu items for speaking
+            breakfast_food = get_cleaned_menu_items(menu_data)
+
+            # Construct the speech output
+            speak_output = f"Today's breakfast is: {breakfast_food}" if breakfast_food else "I'm sorry, I couldn't find the breakfast menu for today."
+            remprompt_text = "Any other questions about the breakfast and lunch menu at Willow Dale?"
 
         return (
             handler_input.response_builder
@@ -169,6 +297,7 @@ class BreakfastIntentHandler (AbstractRequestHandler):
                 .ask(speak_output)
                 .response
         )
+
 
 
 class LaunchRequestHandler(AbstractRequestHandler):
