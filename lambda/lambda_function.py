@@ -93,7 +93,7 @@ class LunchandBreakfastIntentHandler (AbstractRequestHandler):
 
     def handle(self, handler_input):
         # Get today's date as a string
-        date_str = get_todays_date_date()
+        date_str = get_todays_date()
         # Convert the string to a datetime object
         date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
 
