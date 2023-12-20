@@ -1,3 +1,17 @@
+# utils.py
+
+"""
+Utility functions for the Alexa skill.
+
+Currently contains:
+- create_presigned_url: Generates a presigned URL for S3 objects. Useful for temporary access to S3 resources.
+
+Potential future uses:
+- Caching mechanisms.
+- Data formatting functions.
+- API interaction helpers.
+"""
+
 import logging
 import os
 import boto3
