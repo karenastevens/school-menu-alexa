@@ -77,13 +77,22 @@ def get_menu_data(school_id, date, meal_type, grade, person_id):
 def get_cleaned_menu_items(menu_data):
     if menu_data and "ENTREES" in menu_data:
         entrees = menu_data["ENTREES"]
-        if entrees:  # Check if there are any items in ENTREES
+        if entrees:
             cleaned_items = [clean_text(item.get("MenuItemDescription", "")) for item in entrees]
-            return ', '.join(cleaned_items)
+            cleaned_items = [item for item in cleaned_items if item]  # Remove empty strings
+
+            if len(cleaned_items) > 1:
+                return ', '.join(cleaned_items[:-1]) + ', and ' + cleaned_items[-1]
+            elif cleaned_items:
+                return cleaned_items[0]
+            else:
+                return "the same meals you had yesterday!"
+        # Using SSML to slow down the speech rate
+            return f"<speak><prosody rate='slow'>{menu_output}</prosody></speak>"
         else:
             return "No entrees found for the selected date."
     else:
-        return "No data received."
+        return "I'm not seeing anything for lunch or breakfast today. Check to see if you have a day off school."
 
 # Today's Lunch and Breakfast
 
