@@ -1,0 +1,17 @@
+---
+# Test for skill launch.
+- test: "Launch Skill and Ask for Today's Breakfast"
+  - launch: "Alexa, open willow dale menu"
+  - response: "Hey there! Feel free to ask me what's for breakfast or lunch and I can tell you what is being served at Willow Dale Elementary!"
+  - utter: "Goodbye!"
+  - response: "Goodbye! Feel free to visit the Willow Dale Menu any day!"
+
+
+# Test for today's breakfast.
+- test: "Launch Skill and Ask for Today's Breakfast"
+  - launch: "Alexa, open willow dale menu"
+  - response: "Hey there! Feel free to ask me what's for breakfast or lunch and I can tell you what is being served at Willow Dale Elementary!"
+  - utter: "What's for breakfast today?"
+  - response: /Today's breakfast is/
+  - utter: "Goodbye!"
+  - response: "Goodbye! Feel free to visit the Willow Dale Menu any day!"
