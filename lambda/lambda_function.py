@@ -1,14 +1,12 @@
 import logging
+from datetime import datetime
 import ask_sdk_core.utils as ask_utils
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.dispatch_components import AbstractExceptionHandler
 from ask_sdk_core.handler_input import HandlerInput
-
 from ask_sdk_model import Response
-
-# Importing custom modules
-import api_handler
+from api_handler import get_menu_data, get_cleaned_menu_items, SCHOOL_ID, GRADE, PERSON_ID
 import utils
 
 # Configure logging
@@ -23,11 +21,11 @@ class LunchandBreakfastIntentHandler (AbstractRequestHandler):
 
     def handle(self, handler_input):
         # Get today's date as a string
-        date_str = get_todays_date()
+        date_str = utils.get_todays_date()
         # Convert the string to a datetime object
         date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
 
-        if is_weekend(date_obj):
+        if utils.is_weekend(date_obj):
             speak_output = "There is no school today. Have a fantastic weekend!"
         else:
             meal_type = "Breakfast"
@@ -63,11 +61,11 @@ class LunchandBreakfastTomorrowIntentHandler (AbstractRequestHandler):
 
     def handle(self, handler_input):
         # Get tomorrow's date as a string
-        date_str = get_tomorrows_date()
+        date_str = utils.get_tomorrows_date()
         # Convert the string to a datetime object
         date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
 
-        if is_weekend(date_obj):
+        if utils.is_weekend(date_obj):
             speak_output = "There is no school tomorrow. Have a fantastic weekend!"
         else:
             meal_type = "Breakfast"
@@ -104,11 +102,11 @@ class BreakfastTomorrowIntentHandler (AbstractRequestHandler):
 
     def handle(self, handler_input):
         # Get tomorrow's date as a string
-        date_str = get_tomorrows_date()
+        date_str = utils.get_tomorrows_date()
         # Convert the string to a datetime object
         date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
 
-        if is_weekend(date_obj):
+        if utils.is_weekend(date_obj):
             speak_output = "There is no school tomorrow. Have a fantastic weekend!"
         else:
             meal_type = "Breakfast"
@@ -137,11 +135,11 @@ class LunchTomorrowIntentHandler (AbstractRequestHandler):
 
     def handle(self, handler_input):
         # Get tomorrow's date as a string
-        date_str = get_tomorrows_date()
+        date_str = utils.get_tomorrows_date()
         # Convert the string to a datetime object
         date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
 
-        if is_weekend(date_obj):
+        if utils.is_weekend(date_obj):
             speak_output = "There is no school tomorrow. Have a fantastic weekend!"
         else:
             meal_type = "Lunch"
@@ -170,11 +168,11 @@ class LunchIntentHandler (AbstractRequestHandler):
 
     def handle(self, handler_input):
         # Get today's date as a string
-        date_str = get_todays_date()
+        date_str = utils.get_todays_date()
         # Convert the string to a datetime object
         date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
 
-        if is_weekend(date_obj):
+        if utils.is_weekend(date_obj):
             speak_output = "There is no school today. Have a fantastic weekend!"
         else:
             meal_type = "Lunch"
@@ -203,11 +201,11 @@ class BreakfastIntentHandler (AbstractRequestHandler):
 
     def handle(self, handler_input):
         # Get today's date as a string
-        date_str = get_todays_date()
+        date_str = utils.get_todays_date()
         # Convert the string to a datetime object
         date_obj = datetime.strptime(date_str, "%Y-%m-%d").date()
 
-        if is_weekend(date_obj):
+        if utils.is_weekend(date_obj):
             speak_output = "There is no school today. Have a fantastic weekend!"
         else:
             meal_type = "Breakfast"
