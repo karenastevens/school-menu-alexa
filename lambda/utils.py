@@ -1,41 +1,55 @@
-# utils.py
+from datetime import datetime, timedelta
+import re
 
-"""
-Utility functions for the Alexa skill.
-
-Currently contains:
-- create_presigned_url: Generates a presigned URL for S3 objects. Useful for temporary access to S3 resources.
-
-Potential future uses:
-- Caching mechanisms.
-- Data formatting functions.
-- API interaction helpers.
-"""
-
-import logging
-import os
-import boto3
-from botocore.exceptions import ClientError
-
-
-def create_presigned_url(object_name):
-    """Generate a presigned URL to share an S3 object with a capped expiration of 60 seconds
-
-    :param object_name: string
-    :return: Presigned URL as string. If error, returns None.
+def get_todays_date():
     """
-    s3_client = boto3.client('s3',
-                             region_name=os.environ.get('S3_PERSISTENCE_REGION'),
-                             config=boto3.session.Config(signature_version='s3v4',s3={'addressing_style': 'path'}))
-    try:
-        bucket_name = os.environ.get('S3_PERSISTENCE_BUCKET')
-        response = s3_client.generate_presigned_url('get_object',
-                                                    Params={'Bucket': bucket_name,
-                                                            'Key': object_name},
-                                                    ExpiresIn=60*1)
-    except ClientError as e:
-        logging.error(e)
-        return None
+    Returns the current date in 'YYYY-MM-DD' format.
 
-    # The response contains the presigned URL
-    return response
+    Returns:
+        str: The current date.
+    """
+    today = datetime.now()
+    return today.strftime("%Y-%m-%d")
+
+def get_tomorrows_date():
+    """
+    Returns tomorrow's date in 'YYYY-MM-DD' format.
+
+    Returns:
+        str: Tomorrow's date.
+    """
+    today = datetime.now()
+    tomorrow = today + timedelta(days=1)
+    return tomorrow.strftime("%Y-%m-%d")
+
+def is_weekend(date):
+    """
+    Checks if a given date is a weekend.
+
+    Args:
+        date (datetime.date): The date to check.
+
+    Returns:
+        bool: True if the date is a weekend, False otherwise.
+    """
+    return date.weekday() >= 5
+
+def clean_text(text):
+    """
+    Cleans the given text for better readability by Alexa.
+
+    Args:
+        text (str): The text to be cleaned.
+
+    Returns:
+        str: The cleaned text.
+    """
+    text = text.replace('w/', ' with ')
+    text = text.replace('&', 'and')
+    text = text.replace('Combo', '')  # Remove the word 'combo'
+    text = text.replace('Meal', '')   # Remove the word 'meal'
+    text = text.replace('ES', '')     # Remove the word 'ES'
+    text = re.sub(r'\d+', '', text)   # Remove all numbers
+    text = text.replace('#', '')
+    text = text.replace('Main', '')
+    return text.strip()  # Remove any leading/trailing whitespace

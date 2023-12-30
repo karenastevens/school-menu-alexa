@@ -1,11 +1,5 @@
 import logging
-import requests
-import json
-import boto3
-from datetime import date, datetime, timedelta
-import re
 import ask_sdk_core.utils as ask_utils
-
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.dispatch_components import AbstractExceptionHandler
@@ -13,57 +7,13 @@ from ask_sdk_core.handler_input import HandlerInput
 
 from ask_sdk_model import Response
 
-# Global constants - specific to each school
-SCHOOL_ID = "9fd858fc-357b-44be-8652-07f574f659d3" # Willow Dale Elementary
-GRADE = "04" # Student grade
-PERSON_ID = "4eb64127-3ea4-4c3d-91ac-b8035a3971f7" # Student Schoolcafe ID
+# Importing custom modules
+import api_handler
+import utils
 
-# Utility functions
-
-def get_todays_date():
-    today = datetime.now()
-    return today.strftime("%Y-%m-%d")
-
-def get_tomorrows_date():
-    today = datetime.now()
-    tomorrow = today + timedelta(days=1)
-    return tomorrow.strftime("%Y-%m-%d")
-
-def is_weekend(date):
-    return date.weekday() >= 5
-
-# Text cleaning function to make it easier for Alexa to read
-def clean_text(text):
-    # Replace or remove unwanted characters and words
-    text = text.replace('w/', ' with ')
-    text = text.replace('&', 'and')
-    text = text.replace('Combo', '')  # Remove the word 'combo'
-    text = text.replace('Meal', '')   # Remove the word 'meal'
-    text = text.replace('ES', '')     # Remove the word 'ES'
-    text = re.sub(r'\d+', '', text)   # Remove all numbers
-    text = text.replace('#', '')
-    text = text.replace('Main', '')
-    return text.strip()  # Remove any leading/trailing whitespace
-
-def get_cleaned_menu_items(menu_data):
-    if menu_data and "ENTREES" in menu_data:
-        entrees = menu_data["ENTREES"]
-        if entrees:
-            cleaned_items = [clean_text(item.get("MenuItemDescription", "")) for item in entrees]
-            cleaned_items = [item for item in cleaned_items if item]  # Remove empty strings
-
-            if len(cleaned_items) > 1:
-                return ', '.join(cleaned_items[:-1]) + ', and ' + cleaned_items[-1]
-            elif cleaned_items:
-                return cleaned_items[0]
-            else:
-                return "the same meals you had yesterday!"
-        # Using SSML to slow down the speech rate
-            return f"<speak><prosody rate='slow'>{menu_output}</prosody></speak>"
-        else:
-            return "No entrees found for the selected date."
-    else:
-        return "I'm not seeing anything for lunch or breakfast today. Check to see if you have a day off school."
+# Configure logging
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 # Today's Lunch and Breakfast
 
