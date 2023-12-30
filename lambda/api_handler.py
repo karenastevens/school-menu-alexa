@@ -16,8 +16,6 @@ SCHOOL_ID = os.getenv('SCHOOL_ID')
 GRADE = os.getenv('GRADE')
 PERSON_ID = os.getenv('PERSON_ID')
 
-
-
 def get_menu_data(school_id, date, meal_type, grade, person_id):
     """
     Fetches menu data from the Schoolcafe API for a given school, date, and meal type.
