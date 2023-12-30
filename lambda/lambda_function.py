@@ -13,9 +13,6 @@ from ask_sdk_core.handler_input import HandlerInput
 
 from ask_sdk_model import Response
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-
 # Global constants - specific to each school
 SCHOOL_ID = "9fd858fc-357b-44be-8652-07f574f659d3" # Willow Dale Elementary
 GRADE = "04" # Student grade
@@ -47,32 +44,6 @@ def clean_text(text):
     text = text.replace('#', '')
     text = text.replace('Main', '')
     return text.strip()  # Remove any leading/trailing whitespace
-
-def get_menu_data(school_id, date, meal_type, grade, person_id):
-    # Construct the API URL for Schoolcafe
-    base_url = "https://webapis.schoolcafe.com/api/CalendarView/GetDailyMenuitemsByGrade"
-    params = {
-        "SchoolId": school_id,
-        "ServingDate": date,
-        "ServingLine": "Regular",
-        "MealType": meal_type,
-        "Grade": grade,
-        "PersonId": person_id
-    }
-    headers = {
-        "accept": "application/json"
-    }
-
-    # Make the request
-    response = requests.get(base_url, params=params, headers=headers)
-
-    # Check if the request was successful
-    if response.status_code == 200:
-        return response.json()
-    else:
-        logger.error(f"Error fetching data: {response.status_code}")
-        logger.error("Response content: " + response.text)
-        return None
 
 def get_cleaned_menu_items(menu_data):
     if menu_data and "ENTREES" in menu_data:
