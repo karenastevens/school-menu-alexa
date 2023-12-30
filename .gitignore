@@ -1,0 +1,23 @@
+# Bespoken credentials
+bst.json
+
+# Environment files
+.env
+
+# Python specific
+__pycache__/
+*.pyc
+venv/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE-specific files
+.idea/
+*.swp
+*.swo
+
+# Logs
+logs
+*.log
