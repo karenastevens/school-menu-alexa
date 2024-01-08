@@ -1,13 +1,15 @@
 <h1>Willow Dale Menu - Alexa Skill</h1> <img src="https://i.imgur.com/I4EbBQV.png"/>
 
-<h2>Brief Overview</h2>
+<h2>Introduction</h2>
+
+<h3>Brief Overview</h3>
 
 <p>
 The "Willow Dale Menu Alexa Skill" is a voice-activated application designed for Amazon's Alexa platform.
 It serves as a convenient tool for parents and students of Willow Dale Elementary School, providing instant access to the school's breakfast and lunch menus for the current and following day. Unlike traditional methods of checking the school's website, this Alexa Skill offers a hands-free, on-demand solution for busy families.
 </p>
 
-<h2>Motivation<h2>
+<h3>Motivation</h3>
 
 <p>
 My inspiration for developing this Alexa Skill stemmed from a personal necessity. As a parent, I often found myself in a rush, struggling to visit the school's website to check the daily menu options. This challenge sparked the idea of utilizing voice-enabled technology to streamline the process.
