@@ -1,6 +1,37 @@
 <h1>Willow Dale Menu - Alexa Skill</h1> <img src="https://i.imgur.com/I4EbBQV.png"/>
 
-This respository contains the code for an Alexa skill that allows users to hear the current breakfast and lunch menu for a specific school. The skill is written in Python and uses the AWS Lambda function, Alexa Skills kit and an Amazon S3 bucket to access the data.
+<h2>Brief Overview</h2>
+
+<p>
+The "Willow Dale Menu Alexa Skill" is a voice-activated application designed for Amazon's Alexa platform.
+It serves as a convenient tool for parents and students of Willow Dale Elementary School, providing instant access to the school's breakfast and lunch menus for the current and following day. Unlike traditional methods of checking the school's website, this Alexa Skill offers a hands-free, on-demand solution for busy families.
+</p>
+
+<h2>Motivation<h2>
+
+<p>
+My inspiration for developing this Alexa Skill stemmed from a personal necessity. As a parent, I often found myself in a rush, struggling to visit the school's website to check the daily menu options. This challenge sparked the idea of utilizing voice-enabled technology to streamline the process.
+The Alexa Skill emerged as an ideal solution, allowing users to effortlessly inquire about meal options while on the go, whether it's during the morning hustle or while preparing for the next day.
+</p>
+
+<h2>Features</h2>
+
+<h3>Functionality</h3>
+<p>
+This Alexa Skill is designed with simplicity and ease of use in mind. Users can ask Alexa about the breakfast and lunch menus at Willow Dale Elementary for both today and tomorrow. The Skill, through Alexa's voice, responds with the day's menu, eliminating the need to manually search for this information. This feature not only saves time but also enhances the daily routines of families.
+</p>
+
+<h3>User Interaction Examples</h3>
+
+<p>
+Interaction with the Willow Dale Menu Alexa Skill is intuitive and user-friendly. Here are a few voice command examples that users can use:
+
+* "Alexa, open Willow Dale Menu and ask, 'What’s for breakfast today?'"
+* "Alexa, ask Willow Dale Menu, 'What's for breakfast and lunch tomorrow?'"
+* "Alexa, ask Willow Dale Menu, 'What’s for lunch today?'"
+
+These commands highlight the Skill's ability to provide quick and relevant menu information for both today and the next day, catering to the immediate needs of the users.
+</p>
 
 <h2>Prerequisites :nut_and_bolt:</h2>
 
