@@ -55,12 +55,12 @@ After cloning the ‘school-menu-alexa’ repository to your machine, you can be
 
 If your school is already using SchoolCafe, you will need to update the environmental variables to match your student’s credentials. See below for the necessary credentials and an example of how they are structured:
 
-‘’’
+```
 SCHOOL_ID = "9fg858fc-357b-44be-8693-07f574f659g5"
 GRADE = "04"
 PERSON_ID = “27b6414e-a43e-3d4c-ac91-5397a30b7f17”
 
-‘’’
+```
 
 <strong>Important Note:</strong> The PERSON_ID variable is distinct from your student's school ID. This is a unique identifier used specifically by SchoolCafe for each student. You can find it in the URL when logged into the student’s SchoolCafe account.
 
